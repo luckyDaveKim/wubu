@@ -1,6 +1,6 @@
 from pandas import DataFrame, Series
 
-from wubuApp.models.ruleStrategy.condition_response import ConditionResponse
+from src.rule.model.condition_response import ConditionResponse
 
 
 class Bound:
@@ -31,7 +31,7 @@ class Bound:
 
     def check_bound_nth_previous(self, df: DataFrame, previous_nth: int) -> ConditionResponse:
         if len(df) < previous_nth or previous_nth <= 0:
-            raise ValueError(f"DataFrame의 길이 {len(df)} 보다 작고 0보다 큰 previous_nth: {previous_nth} 값을 사용해주세요.")
+            raise ValueError(f"DataFrame의 길이 {len(df)} 보다 작고 0보다 큰 previous_nth 값을 사용해주세요. previous_nth: {previous_nth}")
 
         row = df.iloc[-previous_nth]
         matched_rule = self.check_bound(row).is_matched_rule()

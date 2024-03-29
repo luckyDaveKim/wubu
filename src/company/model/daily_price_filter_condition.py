@@ -1,26 +1,31 @@
 from datetime import datetime
+from typing import List, Optional
 
 from sqlalchemy import and_
 
 from src.common.models.builder import Builder
 from src.common.models.filter_condition import FilterCondition
-from src.company.models.daily_price import DailyPrice
+from src.company.model.daily_price import DailyPrice
 
 DATE_FORMAT = '%Y-%m-%d'
 
 
 class DailyPriceFilterCondition(FilterCondition):
     def __init__(self):
-        self.code = None
-        self.start_date = None
-        self.end_date = None
+        self.code: Optional[str] = None
+        self.codes: Optional[List[str]] = None
+        self.start_date: Optional[str] = None
+        self.end_date: Optional[str] = None
 
     def get_filter(self):
         condition = []
 
         if self.code:
             condition.append(DailyPrice.code == self.code)
-        print(self.start_date)
+
+        if self.codes:
+            condition.append(DailyPrice.code.in_(self.codes))
+
         if self.start_date or self.end_date:
             try:
                 if self.start_date and self.end_date:
@@ -54,6 +59,10 @@ class DailyPriceFilterConditionBuilder(Builder):
 
     def set_code(self, value):
         self.object.code = value
+        return self
+
+    def set_codes(self, value):
+        self.object.codes = value
         return self
 
     def set_start_date(self, value):

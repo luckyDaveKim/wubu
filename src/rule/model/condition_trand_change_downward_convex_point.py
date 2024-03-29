@@ -1,8 +1,8 @@
 from pandas import DataFrame
 
-from wubuApp.models.ruleStrategy.condition_executable import ConditionExecutable
-from wubuApp.models.ruleStrategy.condition_response import ConditionResponse
-from wubuApp.models.ruleStrategy.trand_change_detect import TrandChangeDetect
+from src.rule.model.condition_executable import ConditionExecutable
+from src.rule.model.condition_response import ConditionResponse
+from src.rule.model.trand_change_detect import TrandChangeDetect
 
 
 class ConditionTrandChangeDownwardConvexPoint(ConditionExecutable):

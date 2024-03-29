@@ -1,6 +1,6 @@
 from pandas import DataFrame
 
-from wubuApp.models.ruleStrategy.condition_response import ConditionResponse
+from src.rule.model.condition_response import ConditionResponse
 
 
 class TrandChangeDetect:

@@ -1,4 +1,4 @@
-from src.company.models.dailyPriceStrategy.strategy_executable import StrategyExecutable
+from src.company.model.dailyPriceStrategy.strategy_executable import StrategyExecutable
 
 
 class CandleChartDataExecutor(StrategyExecutable):

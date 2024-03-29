@@ -1,5 +1,5 @@
-from wubuApp.models.ruleStrategy.condition_bollinger_band_lower_bound import ConditionBollingerBandLowerBound
-from wubuApp.models.ruleStrategy.condition_bollinger_band_upper_bound import ConditionBollingerBandUpperBound
+from src.rule.model.condition_bollinger_band_lower_bound import ConditionBollingerBandLowerBound
+from src.rule.model.condition_bollinger_band_upper_bound import ConditionBollingerBandUpperBound
 
 
 class RuleExecutor:

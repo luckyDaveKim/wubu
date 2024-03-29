@@ -1,6 +1,11 @@
 ## 정보
 Python version 3.12
 
+## pipenv 설치
+```shell
+brew install pipenv
+```
+
 ## 가상 환경
 가상환경 생성
 ```shell
@@ -26,5 +31,5 @@ pipenv --py
 ## 프로젝트
 프로젝트 실행
 ```shell
-uvicorn main:app --reload
+uvicorn src.main:app --reload
 ```

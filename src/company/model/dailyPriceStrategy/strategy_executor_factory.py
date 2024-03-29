@@ -1,6 +1,6 @@
-from src.company.models.dailyPriceStrategy.bollinger_band_executor import BollingerBandExecutor
-from src.company.models.dailyPriceStrategy.candle_chart_data_executor import CandleChartDataExecutor
-from src.company.models.dailyPriceStrategy.cleanup_executor import CleanupExecutor
+from src.company.model.dailyPriceStrategy.bollinger_band_executor import BollingerBandExecutor
+from src.company.model.dailyPriceStrategy.candle_chart_data_executor import CandleChartDataExecutor
+from src.company.model.dailyPriceStrategy.cleanup_executor import CleanupExecutor
 
 
 class StrategyExecutorFactory:

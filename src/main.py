@@ -6,15 +6,17 @@ from fastapi.middleware.cors import CORSMiddleware
 from motor.motor_asyncio import AsyncIOMotorClient
 from pydantic import BaseModel
 
-from src.company.models.company_info import CompanyInfo
-from src.company.models.daily_price import DailyPrice
-from src.company.models.product import Category, Product
-from src.company.router import router as company_router
+from src.company.model.company_info import CompanyInfo
+from src.company.model.daily_price import DailyPrice
+from src.company.model.product import Category, Product
+from src.analysis.router import analysis_router
+from src.company.router import company_router
 from src.database.mongodb import init_mongodb
 from src.database.mysql import Session
 
 app = FastAPI()
-app.include_router(company_router)
+app.include_router(analysis_router.router)
+app.include_router(company_router.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,6 +25,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 class Item(BaseModel):
     name: str

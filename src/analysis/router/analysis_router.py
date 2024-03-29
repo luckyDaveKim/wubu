@@ -1,21 +1,43 @@
+from typing import List, Optional
 
-# router = APIRouter(prefix="/api/analysis")
+from fastapi import APIRouter
+from fastapi.params import Query
 
-# @router.get("/")
-# async def get_companies():
-#     condition = CompanyInfoFilterCondition.builder().set_market_type('KOSPI').build()
-#
-#     session = Session()
-#     # TODO : condition 사용하기
-#     # return session.query(CompanyInfo).filter(*condition.get_filter()).order_by("company").all()
-#
-#     # filter_data = {'poster_id': poster_id, 'referenced_politician_id': referenced_politician_id, 'referenced_bill_id': referenced_bill_id}
-#     # filter_data = {key: value for (key, value) in filter_data.items() if value}
-#     # posts = SocialPost.query.filter_by(**filter_data).order_by(SocialPost.id.desc()).all()
-#
-#     return session.query(CompanyInfo).filter(CompanyInfo.market_type == 'KOSPI').order_by("company").all()
+from src.analysis.service import analysis_service
+from src.company.model.company_info_filter_condition import CompanyInfoFilterCondition
+from src.company.model.dailyPriceStrategy import StrategyExecutorFactory
+from src.company.model.daily_price import DailyPrice
+from src.company.model.daily_price_filter_condition import DailyPriceFilterCondition
+from src.company.service import company_service
+from src.rule.model.rule_executor import RuleExecutor
+
+router = APIRouter()
 
 
+@router.post("/api/analysis/rule/{rule_id}")
+async def analysis_companies(rule_id: int,
+                             company_code: Optional[str] = Query(None), company_codes: Optional[List[str]] = Query([]),
+                             start_date: Optional[str] = Query(None), end_date: Optional[str] = Query(None)):
+    condition = (CompanyInfoFilterCondition.builder()
+                 .set_code(company_code)
+                 .set_codes(company_codes)
+                 .build())
+    companies = await company_service.get_companies(condition)
+
+    for company in companies:
+        condition = (DailyPriceFilterCondition
+                     .builder()
+                     .set_code(company.code)
+                     .set_start_date(start_date)
+                     .set_end_date(end_date)
+                     .build())
+
+        daily_price_list = await company_service.get_company_daily_prices(condition)
+        dataframe = DailyPrice.convert_to_dataframe(daily_price_list)
+        calculated_dataframe = StrategyExecutorFactory(dataframe).execute_all(['bollingerBand'])
+        await analysis_service.analysis_companies(rule_id, company.code, calculated_dataframe)
+
+    return True
 
     # def get(self, request):
     #     condition = (MatchedRulesFilterCondition

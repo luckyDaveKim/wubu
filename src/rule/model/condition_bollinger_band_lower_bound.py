@@ -1,8 +1,8 @@
 from pandas import DataFrame
 
-from wubuApp.models.ruleStrategy.bound import Bound
-from wubuApp.models.ruleStrategy.condition_executable import ConditionExecutable
-from wubuApp.models.ruleStrategy.condition_response import ConditionResponse
+from src.rule.model.bound import Bound
+from src.rule.model.condition_executable import ConditionExecutable
+from src.rule.model.condition_response import ConditionResponse
 
 
 class ConditionBollingerBandLowerBound(ConditionExecutable):
